@@ -1,12 +1,26 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+
 import './App.css';
 
 import HomePage from './components/pages/homepage/homepage.component';
 
+const HatsPage = () => (
+	<div>
+	 <h1>Hats Page</h1>
+	</div>
+)
+
 function App() {
   return (
-    <HomePage/>
-  );
+		<div>
+		{/* Switch displays the first one that matches the route.*/}
+			<Switch>
+				<Route exact path='/' component={HomePage}/>
+				<Route path='/hats' component={HatsPage}/>
+			</Switch>
+		</div>
+  )
 }
 
 export default App;
