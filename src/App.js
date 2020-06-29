@@ -3,13 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import './App.css';
 
-import HomePage from './components/pages/homepage/homepage.component';
-
-const HatsPage = () => (
-	<div>
-	 <h1>Hats Page</h1>
-	</div>
-)
+import HomePage from './components/_pages/homepage/homepage.component';
+import ShopPage from './components/_pages/shoppage/shop.component';
 
 function App() {
   return (
@@ -17,7 +12,7 @@ function App() {
 		{/* Switch displays the first one that matches the route.*/}
 			<Switch>
 				<Route exact path='/' component={HomePage}/>
-				<Route path='/hats' component={HatsPage}/>
+				<Route path='/shop' component={ShopPage}/>
 			</Switch>
 		</div>
   )
