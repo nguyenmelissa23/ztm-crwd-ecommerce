@@ -7,7 +7,7 @@ import HomePage from './components/_pages/homepage/homepage.component';
 import ShopPage from './components/_pages/shoppage/shop.component';
 import SignInAndSignUpPage from './components/_pages/sign-in-n-sign-up/sign-in-n-sign-up.component';
 import Header from './components/header/header.component';
-import {auth} from './firebase/firebase.utils';
+import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 
 // changing function to Class because we need state for current user.
 
@@ -23,9 +23,20 @@ class App extends React.Component {
 	unsubscribeFromAuth = null; 
 
 	componentDidMount(){
-		this.unsubscribeFromAuth = auth.onAuthStateChanged( user => {
-			this.setState({currentUser: user});
-			console.log(user);
+		this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+			if (userAuth) { //if we have user authentification info
+				const userRef = await createUserProfileDocument (userAuth); //we will see if it gives us back a snapshot by running createUser...
+				userRef.onSnapshot(snapshot => { //at this point, we only know that the snapshot exists and has an id
+					//console.log(snapshot.data()); // using .data() to actually see the information about user (name, email)
+					this.setState({
+						currentUser: {
+							id: snapshot.id,	// getting the id from the snapshot
+							...snapshot.data() //and everything else
+						}
+					})
+				}); 
+			}
+			this.setState({currentUser: userAuth})
 		});
 	}
 
