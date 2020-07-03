@@ -1,15 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import CustomButton from '../custom-button/custom-button.component';
+import { addItem } from '../../redux/cart/cart.action'
 import './collection-item.styles.scss';
 
-const CollectionItem = ({id, name, price, imageUrl}) => (
-	<div key={id} className='collection-item'>
+const CollectionItem = ({item, addItem, removeItem}) => {
+	const {name, price, imageUrl} = item;
+	return (
+		<div className='collection-item'>
 		<div className='image' style={{backgroundImage: `url(${imageUrl})`}}></div>
 		<div className='content-footer'>
 			<span className='name'>{name}</span>
 			<span className='price'>{price}</span>
 		</div>
+		<CustomButton onClick={() => addItem(item)} inverted>ADD TO CART</CustomButton>
 	</div>
-)
+	)
+}
 
-export default CollectionItem;
+const mapDispatchToProps = dispatch => ({ 
+	addItem: item => dispatch(addItem(item))
+}) 
+// get (item) as the property and then call the action "addItem" and dispatch it through our store and it will go through redux
+export default connect(null,  mapDispatchToProps)(CollectionItem);

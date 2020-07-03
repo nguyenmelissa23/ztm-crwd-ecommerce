@@ -9,7 +9,7 @@ import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 import './header.styles.scss';
-import { toggleCartHidden } from '../../redux/cart/cart.action';
+// import { toggleCartHidden } from '../../redux/cart/cart.action';
 
 const Header = ({currentUser, hidden}) => (
 	<div className='header'>
