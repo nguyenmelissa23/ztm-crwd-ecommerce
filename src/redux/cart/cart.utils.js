@@ -14,3 +14,11 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
 	return [...cartItems, {...cartItemToAdd, quantity: 1}]
 	//everytime we add a new item, it would start with quantity = 1
 };
+
+export const clearItemFromCart = (cartItems, cartItemToClear) => {
+	const currentCartItems = cartItems.filter(cartItem => cartItem.id !== cartItemToClear.id
+	);
+
+	return [...currentCartItems]
+	
+};
