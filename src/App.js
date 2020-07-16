@@ -2,9 +2,14 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument, 
+				// addCollectionAndDocuments 
+				// for adding the data to firebase
+				} from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
+// import {selectCollectionsForPreview} from './redux/shop/shop.selectors';
+// for adding the data to firebase
 
 import HomePage from './components/_pages/homepage/homepage.component';
 import ShopPage from './components/_pages/shoppage/shop.component';
@@ -23,7 +28,12 @@ class App extends React.Component {
 	unsubscribeFromAuth = null; 
 
 	componentDidMount(){
-		const { setCurrentUser } = this.props;
+		const { 
+			setCurrentUser, 
+			// collectionsArray 
+			// for adding the data to firebase
+		} = this.props;
+
 		this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
 			if (userAuth) { //if we have user authentification info
 				const userRef = await createUserProfileDocument (userAuth); //we will see if it gives us back a snapshot by running createUser...
@@ -37,6 +47,7 @@ class App extends React.Component {
 				}); 
 			}
 			setCurrentUser(userAuth);
+			// addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
 		});
 	}
 
@@ -64,7 +75,9 @@ class App extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-	currentUser: selectCurrentUser
+	currentUser: selectCurrentUser, 
+	// collectionsArray: selectCollectionsForPreview
+	// for adding the data to firebase
 });
 
 const mapDispatchToProps = dispatch => ({
