@@ -2,10 +2,11 @@ import { createStore, applyMiddleware } from 'redux';
 // we need Middleware so that when actions get fired and dispatched, we can catch them. 
 import logger from 'redux-logger';
 import { persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
 
 import rootReducer from './root-reducer';
 
-const middleware = [];  // this is an array.
+const middleware = [thunk];  // this is an array.
 
 //NOTE: only apply to development and not deployment
 if (process.env.NODE_ENV === 'development'){
