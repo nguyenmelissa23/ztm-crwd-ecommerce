@@ -1,66 +1,59 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { connect } from 'react-redux';
-import { createStructuredSelector} from 'reselect';
 
-import {fetchCollectionsStartAsync} from '../../../redux/shop/shop.actions';
-import { selectIsCollectionFetching, selectIsCollectionsLoaded } from '../../../redux/shop/shop.selectors';
+import { fetchCollectionsStart } from '../../../redux/shop/shop.actions';
 
-
-import CollectionsOverview from '../../collections-overview/collections-overview.component.js';
-import CollectionPage from '../collection/collection.component';
-import WithSpinner from '../../with-spinner/with-spinner.component';
-
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
-
+import CollectionsOverviewContainer from '../../collections-overview/collections-overview.container.js';
+import CollectionPageContainer from '../collection/collection.container';
 
 class ShopPage extends React.Component {
 	
 
 	componentDidMount() {
-		const { fetchCollectionsStartAsync } = this.props;
-		fetchCollectionsStartAsync();
+		const { fetchCollectionsStart } = this.props;
+		fetchCollectionsStart();
 		console.log('componentDidMount');
 	}
 
-
-		//ANCHOR: using fetch and firebase as API call:
-		// fetch(
-		// 	'https://firestore.googleapis.com/v1/projects/crwd-db-381d0/databases/(default)/documents/collections'
-		// )
-		// 	.then( response => response.json())
-		// 	.then(collections => {
-		// 		console.log(collections);
-		// 		this.setState({ loading: false });
-		// 		});
-		//ANCHOR: using onSnapshot - listener
-		// this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshop => {
-		// 	const collectionsMap = convertCollectionsSnapshotToMap(snapshop);
-		// 	updateCollections(collectionsMap);
-		// 	this.setState({ loading: false })
-		// });
-	
 	render() {
-		const { match, isFetchingCollections, isCollectionsLoaded } = this.props;
+		const { match } = this.props;
 		return ( 
 			<div className='shop-page'>
-				<Route exact path={`${match.path}`} render={ (props) => <CollectionsOverviewWithSpinner isLoading={isFetchingCollections} {...props} />}/> 
-				<Route path={`${match.path}/:collectionId`} render={(props) => <CollectionPageWithSpinner isLoading={!isCollectionsLoaded} {...props}/>} />
+				<Route 
+					exact 
+					path={`${match.path}`} 
+					component={CollectionsOverviewContainer}
+				/> 
+				<Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
 			</div>
 		)
 	}
 };
 
-const mapStateToProps = createStructuredSelector({
-	isFetchingCollections: selectIsCollectionFetching, 
-	isCollectionsLoaded: selectIsCollectionsLoaded
-})
 
 const mapDispatchToProps = dispatch => ({
-	fetchCollectionsStartAsync: () => dispatch(
-		fetchCollectionsStartAsync()
+	fetchCollectionsStart: () => dispatch(
+		fetchCollectionsStart()
 	)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
+export default connect(null, mapDispatchToProps)(ShopPage);
+
+
+
+//ANCHOR: using fetch and firebase as API call:
+// fetch(
+// 	'https://firestore.googleapis.com/v1/projects/crwd-db-381d0/databases/(default)/documents/collections'
+// )
+// 	.then( response => response.json())
+// 	.then(collections => {
+// 		console.log(collections);
+// 		this.setState({ loading: false });
+// 		});
+//ANCHOR: using onSnapshot - listener
+// this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshop => {
+// 	const collectionsMap = convertCollectionsSnapshotToMap(snapshop);
+// 	updateCollections(collectionsMap);
+// 	this.setState({ loading: false })
+// });
