@@ -81,7 +81,6 @@ export const convertCollectionsSnapshotToMap  = (collectionsSnapshot) => {
 			items
 		};
 	});
-
 	console.log('transformedCollection', transformedCollection);
 	return transformedCollection.reduce((accumulator, collection) => {
 		accumulator[collection.title.toLowerCase()] = collection;
@@ -90,6 +89,15 @@ export const convertCollectionsSnapshotToMap  = (collectionsSnapshot) => {
 	}, {});
 };
 
+
+export const getCurrentUser = () => {
+	return new Promise((resolve, reject) => {
+		const unsubscribe = auth.onAuthStateChanged(userAuth => {
+			unsubscribe();
+			resolve(userAuth);
+		}, reject)
+	})
+}
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
