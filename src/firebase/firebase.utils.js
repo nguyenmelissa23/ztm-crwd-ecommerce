@@ -16,15 +16,7 @@ const config = {
 firebase.initializeApp(config);
 
 
-export const signInWithEmail = (email, password) => auth.signInWithEmailAndPassword(email, password)
-	.then( result => {
-    // result.user.tenantId should be ‘TENANT_PROJECT_ID’.
-		console.log('login result:', result);
-  })
-	.catch(error => {
-    // Handle error.
-		console.log('login error:', error);
-  });
+
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
 	if (!userAuth) return; // if it is not null, this = true ==> 
