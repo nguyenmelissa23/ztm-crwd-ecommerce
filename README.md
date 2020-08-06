@@ -1,5 +1,23 @@
 ## React + Redux E-commerce website: 
-https://crwn-mel.herokuapp.com/
+
+E-commerce React + Redux + Hook website with Stripe payment and Firebase integration. 
+
+Visit: https://crwn--mel.herokuapp.com/
+
+User can:
++ Sign up, sign in using email and password
++ Sign in using Google authentication via Firebase
++ Sign out and clear cart
++ Add items into carts 
++ Remove and add items from the checkout page
++ Keep being signed in after the page is reloaded.
+
+Future improvements: 
++ Save user's cart to Firebase
++ User can like and save an item
+
+> Project is deployed on Heroku.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
